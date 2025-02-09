@@ -1,1 +1,67 @@
+include <iostream>
+include <string>
+
+using namespace std;
+
+class Character {
+private:
+       string name;
+       string ability;
+       int strength;
+       int agility;
+       int intelligence; 
+
+
+public:
+      Character (string name, string ability, int strength,  int agility, int intelligence)
+      {
+          name = nameCharacter; 
+          ability = abilityCharacter; 
+          strength = strengthCharacter;
+          agility = agilityCharacter;
+          intelligence = intelligenceCharacter; 
+      }
+
+    void InfoCharacter()
+   {
+       cout << "Name: " << name << endl;
+       cout << "Ability" << ability << endl 
+       cout << "Strength" << strength << endl;
+       cout << "Agility" <<  agility << endl;
+       cout << " Intelligence" <<  intelligence << endl;
+   }
+
+   void InfoAbility()
+   {
+       int RandomAbility;
+       cout << "Ability: " << ability << endl;
+   }
+       
+       int InfoDamage()
+   {
+       if (ability == 0) {
+           return 1;
+   }
+}
+
+
+int main()
+{
+    setlocale(LC_ALL, "ru");
+
+    Character voin1("Боец", 15, 5, 8);
+    Character ability1("Уклонение", "Мощный удар" , "Контроатака");
+    voin1.RandomAbility();
+    voin1.infoCharacter();
+
+    Character voin2("Стрелок", 8,  12, 10);
+    Character ability2("Меткость", "Скорость" , "Уклонение");
+    voin2.RandomAbility();
+    voin2.infoCharacter();
+
+    Character voin3("Ученый", 4, 10, 18);
+    Character ability3("Лечение", "Изучение" , "Скорость");
+    voin3.RandomAbility();
+    voin3.infoCharacter();
+} 
 
