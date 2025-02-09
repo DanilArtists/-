@@ -1,0 +1,33 @@
+#include <iostream>
+
+using namespace std; 
+
+class Pudge 
+{
+private:
+    int health;
+    int armour;
+
+public:
+    Pudge(int health, int armour) 
+
+    void FreshMeat() {
+    health = healthPudge;
+    armour = armourPudge;
+    }
+
+    void Info(){
+    cout << "Health: " << health << endl;
+    cout << "Armour: " << armour << endl;
+    }
+    
+};
+
+int main() {
+    Pudge.pudge(50, 25); 
+    pudge.Info(); 
+
+    pudge.FreshMeat(10, 10); 
+    pudge.Info(); 
+
+}
