@@ -1,69 +1,63 @@
-// Извините Артём, но дальше если я буду делать на VSC, тогда я буквально сойду с ума.
+#include <iostream>
+#include <string>
+using namespace std; 
 
-include <iostream>
-include <string>
-
-using namespace std;
-
-class Character {
+class fridge
+{
 private:
-       string name;
-       string ability;
-       int strength;
-       int agility;
-       int intelligence; 
-
+ string brand;
+ string model;
+ int size;
 
 public:
-      Character (string name, string ability, int strength,  int agility, int intelligence)
-      {
-          name = nameCharacter; 
-          ability = abilityCharacter; 
-          strength = strengthCharacter;
-          agility = agilityCharacter;
-          intelligence = intelligenceCharacter; 
-      }
+ fridge (string brand, string model, int size) 
+ {
+  this->brand; 
+  this->model;
+  this->size;
+ }
+ fridge() : brand("Any"), model("Any"), size(0)
+ {}
+ void fridgeInfo(){
+  cout << "Brand: " << brand << endl;
+  cout << "Model: " << model << endl;
+  cout << "Size: " << size << endl; 
+ }
 
-    void InfoCharacter()
-   {
-       cout << "Name: " << name << endl;
-       cout << "Ability" << ability << endl 
-       cout << "Strength" << strength << endl;
-       cout << "Agility" <<  agility << endl;
-       cout << " Intelligence" <<  intelligence << endl;
-   }
-
-   void InfoAbility()
-   {
-       int RandomAbility;
-       cout << "Ability: " << ability << endl;
-   }
-       
-       int InfoDamage()
-   {
-       if (ability == 0) {
-           return 1;
-   }
-}
-
+}; 
 
 int main()
 {
-    setlocale(LC_ALL, "ru");
+ setlocale(LC_ALL, "ru");
 
-    Character voin1("Боец", 15, 5, 8);
-    Character ability1("Уклонение", "Мощный удар" , "Контроатака");
-    voin1.RandomAbility();
-    voin1.infoCharacter();
+ int choice;
+ cout << "Выберите что вам надо: " << endl;
+ cout << "1. Бренд: " << endl;
+ cout << "2. Модель: " << endl;
+ cout << "3. Размер: " << endl;
 
-    Character voin2("Стрелок", 8,  12, 10);
-    Character ability2("Меткость", "Скорость" , "Уклонение");
-    voin2.RandomAbility();
-    voin2.infoCharacter();
+ cout << "Вывести:";
+ cin >> choice;
 
-    Character voin3("Ученый", 4, 10, 18);
-    Character ability3("Лечение", "Изучение" , "Скорость");
-    voin3.RandomAbility();
-    voin3.infoCharacter();
-} 
-
+ string fridge;
+ switch (choice)
+ {
+ case 1: {
+  string brand;
+  cout << "Введите бренд: ";
+  cin >> brand;
+ }
+ case 2: 
+ {
+  string model;
+  cout << "Введите модель: ";
+  cin >> model;
+ }
+ case 3: {
+  int size;
+  cout << "Введите размер: ";
+  cin >> size;
+ }
+ }
+ cout << "Холодильник" << fridge << endl; 
+}
