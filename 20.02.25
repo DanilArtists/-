@@ -1,1 +1,42 @@
+#include <iostream>
+#include <string>
 
+using namespace std;
+
+class DynamicArray {
+private:
+    int cons = intCons;
+    int size = intSize;
+    bool mass = boolMass;
+
+public:
+    DynamicArray(intCons, intSize, boolMass;) 
+    {
+        cons = intCons;
+        size = intSize;
+        mass = boolMass;
+    }
+
+    ~DynamicArray() 
+    {
+        cout << "Конструктор  массива c размером " << cons << endl;
+        cout << "Деструктор: освобождение памяти" << size << endl;
+        cout << "Конструктор копирования: массив скопирован и увеличен на единицу" << mass << endl;
+    }
+
+    void set(int cons, int size, bool mass) 
+     {
+         cons =< 0;
+     }
+
+    void get(int cons, int size, bool mass) 
+    {
+        cons =>1;
+    }
+};
+
+int main() {
+    setlocale(LC_ALL, "ru");
+
+    cout << "Создание массива" << endl;
+}
