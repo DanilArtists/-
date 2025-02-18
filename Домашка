@@ -1,63 +1,39 @@
 #include <iostream>
 #include <string>
-using namespace std; 
 
-class fridge
-{
+using namespace std;
+
+class Konst {
 private:
- string brand;
- string model;
- int size;
+    int intLog;
+    double doubleCop;
+    string stringEding;
 
 public:
- fridge (string brand, string model, int size) 
- {
-  this->brand; 
-  this->model;
-  this->size;
- }
- fridge() : brand("Any"), model("Any"), size(0)
- {}
- void fridgeInfo(){
-  cout << "Brand: " << brand << endl;
-  cout << "Model: " << model << endl;
-  cout << "Size: " << size << endl; 
- }
+    Konst() 
+    {
+        intLog = 0;
+        doubleCop = 0.0;
+        stringEding = "This";
+    }
 
-}; 
+    void printKonst() const {
+        cout << "IntLog: " << intLog << endl;
+        cout << "DoubleCop: " << doubleCop << endl;
+        cout << "StringEding: " << stringEding << endl;
+    }
+        
+};
 
-int main()
-{
- setlocale(LC_ALL, "ru");
+int main() {
+    Konst rabota1(5, 3.0, "Правило");
+    cout << "rabota1:" << endl;
+    rabota1.printKonst();
+    cout << endl;
 
- int choice;
- cout << "Выберите что вам надо: " << endl;
- cout << "1. Бренд: " << endl;
- cout << "2. Модель: " << endl;
- cout << "3. Размер: " << endl;
+    Konst rabota2 = rabota1;
+    cout << "rabota2:" << endl;
+    rabota2.printKonst();
+    cout << endl;
 
- cout << "Вывести:";
- cin >> choice;
-
- string fridge;
- switch (choice)
- {
- case 1: {
-  string brand;
-  cout << "Введите бренд: ";
-  cin >> brand;
- }
- case 2: 
- {
-  string model;
-  cout << "Введите модель: ";
-  cin >> model;
- }
- case 3: {
-  int size;
-  cout << "Введите размер: ";
-  cin >> size;
- }
- }
- cout << "Холодильник" << fridge << endl; 
 }
