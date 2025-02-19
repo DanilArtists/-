@@ -1,0 +1,69 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Fridge
+{
+private:
+ string brand;
+ string model;
+ int size;
+
+public:
+ Fridge()
+ {
+  brand = "Any";
+  model = "Any";
+  size = 0;
+ }
+
+ Fridge(string brand, string model, int size)
+ {
+  this->brand = brand;
+  this->model = model;
+  this->size = size;
+ }
+ void FridgeInfo() {
+  cout << "Brand: " << brand << endl;
+  cout << "Model: " << model << endl;
+  cout << "Size: " << size << endl;
+ }
+};
+void Menu() {
+    cout << "Меню:" << endl;
+    cout << "1. Добавить пустой объект" << endl;
+    cout << "2. Добавить объект с данными" << endl;
+    cout << "3. Редактировать объект" << endl;
+    cout << "4. Вывести информацию обо всех объектах" << endl;
+    cout << "5. Сортировать объекты по размеру" << endl;
+    cout << "6. Завершить работу" << endl;
+}
+
+int main() {
+    setlocale(LC_ALL, "ru");
+    int choice;
+
+    choice {
+        Menu();
+        cout << "Выберите меню: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                cout << "Пустой холодильник добавлен." << endl;
+                break;
+            }
+            case 2: {
+                string brand, model;
+                int size;
+                cout << "Введите бренд: ";
+                cin >> brand;
+                cout << "Введите модель: ";
+                cin >> model;
+                cout << "Введите размер: ";
+                cin >> size;
+                cout << "Холодильник добавлен." << endl;
+                break;
+            }       
+}
