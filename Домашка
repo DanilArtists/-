@@ -3,37 +3,56 @@
 
 using namespace std;
 
-class Konst {
+class Point {
 private:
-    int intLog;
-    double doubleCop;
-    string stringEding;
+  int pole1 = intPole1;
+  double pole2 = doublePole2;
+  string pole3 = stringPole3;
 
 public:
-    Konst() 
-    {
-        intLog = 0;
-        doubleCop = 0.0;
-        stringEding = "This";
-    }
+  Point()  pole1(0), pole2(0), pole3("")  {
+      cout << "Конструктор вызван" << endl;
+  }
 
-    void printKonst() const {
-        cout << "IntLog: " << intLog << endl;
-        cout << "DoubleCop: " << doubleCop << endl;
-        cout << "StringEding: " << stringEding << endl;
-    }
-        
+  Point(int pole1, double pole2, string pole3) {
+      pole1 = intPole1;
+      pole2 = doublePole2;
+      pole3 = stringPole3;
+  }
+ 
+  Point(const point& other) {
+    cout << "Конструктор копирования вызван" << endl;
+    cout << "  Копирование pole1: " << other.pole1 << pole1 << endl;
+    cout << "  Копирование pole2: " << other.pole2 << pole2 << endl;
+    cout << "  Копирование pole3: " << other.pole3 << pole3 << endl;
+  }
+
+  Point& operator=(const point& other) {
+    cout << "Оператор вызван" << endl;
+  }
+
+  void pole() 
+{
+    cout << "pole1:  " << pole1 << endl;
+    cout << "pole2:  " << pole2 << endl;
+    cout << "pole3:  " << pole3 << endl;
+}
+
+  ~Point() {
+      cout << "Деструктор вызван" << endl;
+  }
 };
 
 int main() {
-    Konst rabota1(5, 3.0, "Правило");
-    cout << "rabota1:" << endl;
-    rabota1.printKonst();
-    cout << endl;
+    setlocale(LC_ALL, "Ru");
+  Point case1(5, 1.15, "Надпись");
+  cout << "Case1: " << endl;
 
-    Konst rabota2 = rabota1;
-    cout << "rabota2:" << endl;
-    rabota2.printKonst();
-    cout << endl;
+  Point case2 = case1; 
+  cout << "Case2: " << endl;
+
+  Point case3; 
+  case2 = case1; 
+  cout << "Case 3: " << endl;
 
 }
