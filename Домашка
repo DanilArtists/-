@@ -1,58 +1,60 @@
-#include <iostream>
-#include <string>
+// 1
 
+#include <iostream>
+#include <vector>
 using namespace std;
 
-class Point {
-private:
-  int pole1 = intPole1;
-  double pole2 = doublePole2;
-  string pole3 = stringPole3;
-
-public:
-  Point()  pole1(0), pole2(0), pole3("")  {
-      cout << "Конструктор вызван" << endl;
-  }
-
-  Point(int pole1, double pole2, string pole3) {
-      pole1 = intPole1;
-      pole2 = doublePole2;
-      pole3 = stringPole3;
-  }
- 
-  Point(const point& other) {
-    cout << "Конструктор копирования вызван" << endl;
-    cout << "  Копирование pole1: " << other.pole1 << pole1 << endl;
-    cout << "  Копирование pole2: " << other.pole2 << pole2 << endl;
-    cout << "  Копирование pole3: " << other.pole3 << pole3 << endl;
-  }
-
-  Point& operator=(const point& other) {
-    cout << "Оператор вызван" << endl;
-  }
-
-  void pole() 
+int main() 
 {
-    cout << "pole1:  " << pole1 << endl;
-    cout << "pole2:  " << pole2 << endl;
-    cout << "pole3:  " << pole3 << endl;
+    setlocale(LC_ALL, "Ru");
+    int N;
+
+    cout << "Введите размер вектора N: " << endl;
+    cin >> N;
+
+    vector<int> numbers(N);
+
+    cout << "Введите " << N << " чисел: " << endl;
+    for (int i = 0; i < N; i++) {
+        cin >> numbers[i];
+    }
+
+    cout << "Числа в обратном порядке: " << endl;
+    for (int i = N - 1; i >= 0; i--) {
+        cout << numbers[i] << " " << endl;
+    }
 }
 
-  ~Point() {
-      cout << "Деструктор вызван" << endl;
-  }
-};
+// 2
+#include <iostream>
+#include <vector>
+using namespace std;
 
-int main() {
+int main() 
+{
     setlocale(LC_ALL, "Ru");
-  Point case1(5, 1.15, "Надпись");
-  cout << "Case1: " << endl;
+    int N;
+    cout << "Введите размер вектора: " << endl;
+    cin >> N;
 
-  Point case2 = case1; 
-  cout << "Case2: " << endl;
+    vector<int> Element; 
 
-  Point case3; 
-  case2 = case1; 
-  cout << "Case 3: " << endl;
+    for (int i = 0; i < N; i++) {
+        int cis;
+        cout << "Введите строку " << (i + 1) << ": " << endl;
+        cin >> cis;
+        Element.push_back(cis);
+    }
 
+    int number;
+    cout << "Введите строку для вектора: " << endl;
+    cin >> number;
+    Element.push_back(number);
+
+    cout << "Элементы вектора:" << endl;
+    for (const auto& str : Element) {
+        cout << str << endl;
+    }
+
+    cout << "Элемент: " << __cplusplus << endl;
 }
