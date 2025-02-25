@@ -1,60 +1,44 @@
-// 1
-
 #include <iostream>
-#include <vector>
 using namespace std;
 
-int main() 
-{
+class BattleUnit {
+private:
+    int health;
+    int damage;
+
+public:
+    int Man(int health, int damage) 
+    {
+        totalHealth += health;
+        totalDamage += damage;
+    }
+
+    void setHealth(int health) {
+        "Здоровье" -= health; 
+        "Здоровье" += health; 
+    }
+
+    void setDamage(int damage) {
+        "Урон" -= damage; 
+        "Урон" += damage;
+    }
+
+    int getHealth() const {
+        return health;
+    }
+
+    int getDamage() const {
+        return damage;
+    }
+
+};
+
+int main() {
     setlocale(LC_ALL, "Ru");
-    int N;
+    Man sold1(150, 25, "Солдат");
+    Man sold2(120, 40, "Снайпер");
 
-    cout << "Введите размер вектора N: " << endl;
-    cin >> N;
+    cout << "Здоровье: " << health << endl;
+    cout << "Урон: " << damage << endl;
 
-    vector<int> numbers(N);
-
-    cout << "Введите " << N << " чисел: " << endl;
-    for (int i = 0; i < N; i++) {
-        cin >> numbers[i];
-    }
-
-    cout << "Числа в обратном порядке: " << endl;
-    for (int i = N - 1; i >= 0; i--) {
-        cout << numbers[i] << " " << endl;
-    }
-}
-
-// 2
-#include <iostream>
-#include <vector>
-using namespace std;
-
-int main() 
-{
-    setlocale(LC_ALL, "Ru");
-    int N;
-    cout << "Введите размер вектора: " << endl;
-    cin >> N;
-
-    vector<int> Element; 
-
-    for (int i = 0; i < N; i++) {
-        int cis;
-        cout << "Введите строку " << (i + 1) << ": " << endl;
-        cin >> cis;
-        Element.push_back(cis);
-    }
-
-    int number;
-    cout << "Введите строку для вектора: " << endl;
-    cin >> number;
-    Element.push_back(number);
-
-    cout << "Элементы вектора:" << endl;
-    for (const auto& str : Element) {
-        cout << str << endl;
-    }
-
-    cout << "Элемент: " << __cplusplus << endl;
 }
