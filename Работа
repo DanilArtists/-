@@ -1,69 +1,42 @@
 #include <iostream>
-#include <string>
-
 using namespace std;
 
-class Fridge
-{
+class Point {
 private:
- string brand;
- string model;
- int size;
+   int x;
+   int y;
+   int z;
 
 public:
- Fridge()
- {
-  brand = "Any";
-  model = "Any";
-  size = 0;
- }
+Point(int x, int y, int z) 
+{
+    bool operator==(const Point& other) {
+        return x == other.x, y == other.y, z == other.z;
+    }
 
- Fridge(string brand, string model, int size)
- {
-  this->brand = brand;
-  this->model = model;
-  this->size = size;
- }
- void FridgeInfo() {
-  cout << "Brand: " << brand << endl;
-  cout << "Model: " << model << endl;
-  cout << "Size: " << size << endl;
- }
+    bool operator!=(const Point& other) {
+        return !(*this == other);
+    }
+
+    Point operator-=(const Point& other) {
+        return Point(x - other.x, y - other.y, z - other.z);
+    }
+
+    Point& operator++() {
+        x++; 
+        y++; 
+        z++; 
+        return !(*this == other);
+    }
 };
-void Menu() {
-    cout << "Меню:" << endl;
-    cout << "1. Добавить пустой объект" << endl;
-    cout << "2. Добавить объект с данными" << endl;
-    cout << "3. Редактировать объект" << endl;
-    cout << "4. Вывести информацию обо всех объектах" << endl;
-    cout << "5. Сортировать объекты по размеру" << endl;
-    cout << "6. Завершить работу" << endl;
-}
 
 int main() {
-    setlocale(LC_ALL, "ru");
-    int choice;
+    Point poin1(1, 2, 3);
+    Point pon2(1, 2, 3);
+    Point poin3(4, 5, 6);
 
-    choice {
-        Menu();
-        cout << "Выберите меню: ";
-        cin >> choice;
+    cout << "poin1: " << poin1 << endl;
+    cout << "poin2: " << poin2 << endl;
+    cout << "poin3: " << poin3 << endl;
 
-        switch (choice) {
-            case 1: {
-                cout << "Пустой холодильник добавлен." << endl;
-                break;
-            }
-            case 2: {
-                string brand, model;
-                int size;
-                cout << "Введите бренд: ";
-                cin >> brand;
-                cout << "Введите модель: ";
-                cin >> model;
-                cout << "Введите размер: ";
-                cin >> size;
-                cout << "Холодильник добавлен." << endl;
-                break;
-            }       
 }
