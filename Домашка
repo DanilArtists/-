@@ -1,44 +1,46 @@
 #include <iostream>
+
 using namespace std;
 
-class BattleUnit {
+class Animal 
+{
 private:
-    int health;
-    int damage;
+    string name;
+    int ved;
+protected:
+    int age; 
 
 public:
-    int Man(int health, int damage) 
-    {
-        totalHealth += health;
-        totalDamage += damage;
-    }
+Animal(string name, int ves, int age) : name(name), ves(ves), age(age) {}
 
-    void setHealth(int health) {
-        "Здоровье" -= health; 
-        "Здоровье" += health; 
-    }
-
-    void setDamage(int damage) {
-        "Урон" -= damage; 
-        "Урон" += damage;
-    }
-
-    int getHealth() const {
-        return health;
-    }
-
-    int getDamage() const {
-        return damage;
-    }
-
+void print() const 
+{
+cout << "Имя животного: " << name << "Вес: " << ves << "Возраст: " << age << endl;
+}
 };
 
-int main() {
-    setlocale(LC_ALL, "Ru");
-    Man sold1(150, 25, "Солдат");
-    Man sold2(120, 40, "Снайпер");
+class Cat : public Animal 
+{
+public:
+Cat(string name, int ves, int age) : Animal(name, ves, age) {}
+};
 
-    cout << "Здоровье: " << health << endl;
-    cout << "Урон: " << damage << endl;
+class Dog : public Animal 
+{
+public:
+Dog(string name, int ves, int age) : Animal(name, ves, age) {}
+};
+
+int main() 
+{
+setlocale(LC_ALL, "Ru");
+
+Cat cats("Сапфир", 5, 5);
+
+Dog dogs("Кокосик", 9,  5);
+
+
+cats.print();
+dogs.print();
 
 }
