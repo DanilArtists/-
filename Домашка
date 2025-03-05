@@ -1,46 +1,109 @@
 #include <iostream>
+#include <vector>
+#include <string>
 
 using namespace std;
 
-class Animal 
+class Fridge
 {
 private:
-    string name;
-    int ved;
-protected:
-    int age; 
+    int weight;
+    int energy;
+    string brand;
+    string company;
 
 public:
-Animal(string name, int ves, int age) : name(name), ves(ves), age(age) {}
+    Fridge() : weight(0), energy(0), brand("Название"), company("Название") {}
 
-void print() const 
-{
-cout << "Имя животного: " << name << "Вес: " << ves << "Возраст: " << age << endl;
-}
+    Fridge(int ves, int power, string brend, string compania) : weight(ves), energy(power), brand(brend), company(compania) {}
+
+    int Weight() const
+    {
+        return weight;
+    }
+    int Energy() const
+    {
+        return energy;
+    }
+    string Brand() const
+    {
+        return brand;
+    }
+    string Сompany() const
+    {
+        return company;
+    }
+
+    string Info() const
+    {
+        return "Бренд: " + brand + ", Компания: " + company + ", Вес: " + to_string(weight) + ", Энергия: " + to_string(energy);
+    }
+
 };
 
-class Cat : public Animal 
+int main()
 {
-public:
-Cat(string name, int ves, int age) : Animal(name, ves, age) {}
-};
+    setlocale(LC_ALL, "Ru");
+    vector<Fridge> holodilnics;
+    int choice;
 
-class Dog : public Animal 
-{
-public:
-Dog(string name, int ves, int age) : Animal(name, ves, age) {}
-};
+    do
+    {
+        cout << "\nМеню:\n";
+        cout << "1. Добавить пустую информацию\n";
+        cout << "2. Добавить информацию с данными\n";
+        cout << "3. Вывести информацию обо всех холодильниках\n";
+        cout << "4. Завершить работу\n";
+        cout << "Выберите пункт меню: ";
+        cin >> choice;
 
-int main() 
-{
-setlocale(LC_ALL, "Ru");
+        switch (choice)
+        {
+        case 1:
+        {
+            holodilnics.emplace_back();
+            cout << "Пустой холодильник добавлен.\n";
+            break;
+        }
+        case 2:
+        {
+            int ves;
+            int power;
+            string brend;
+            string compania;
 
-Cat cats("Сапфир", 5, 5);
+            cout << "Введите вес холодильника: ";
+            cin >> ves;
+            cout << "Введите энергию холодильника: ";
+            cin >> power;
+            cout << "Введите бренд: ";
+            cin >> brend;
+            cout << "Введите название компании: ";
+            cin >> compania;
 
-Dog dogs("Кокосик", 9,  5);
-
-
-cats.print();
-dogs.print();
-
+            holodilnics.emplace_back(ves, power, brend, compania);
+            cout << "Холодильник добавлен.\n";
+            break;
+        }
+        case 3:
+        {
+            cout << "Информация об холодильниках:\n";
+            for (const auto& fridge : holodilnics)
+            {
+                cout << fridge.Info() << "\n";
+            }
+            break;
+        }
+        case 4:
+        {
+            cout << "Завершение работы программы.\n";
+            break;
+        }
+        default:
+        {
+            cout << "Некорректный выбор. Попробуйте снова.\n";
+            break;
+        }
+        }
+    } while (choice != 4);
 }
