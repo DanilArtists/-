@@ -1,109 +1,44 @@
 #include <iostream>
-#include <vector>
-#include <string>
-
 using namespace std;
 
-class Fridge
+class Algebra;
+class Math;
+
+class Math
 {
 private:
-    int weight;
-    int energy;
-    string brand;
-    string company;
+    int Code1;
+    int Code2;
 
 public:
-    Fridge() : weight(0), energy(0), brand("Название"), company("Название") {}
+    Math(int one, int second) : Code1(one), Code2(second) {}
 
-    Fridge(int ves, int power, string brend, string compania) : weight(ves), energy(power), brand(brend), company(compania) {}
-
-    int Weight() const
-    {
-        return weight;
-    }
-    int Energy() const
-    {
-        return energy;
-    }
-    string Brand() const
-    {
-        return brand;
-    }
-    string Сompany() const
-    {
-        return company;
-    }
-
-    string Info() const
-    {
-        return "Бренд: " + brand + ", Компания: " + company + ", Вес: " + to_string(weight) + ", Энергия: " + to_string(energy);
-    }
-
+    friend void mathing(Algebra& one, Math& second);
 };
+
+class Algebra
+{
+private:
+    int Code1;
+    int Code2;
+
+public:
+    Algebra(int three, int four) : Code1(three), Code2(four) {}
+
+    friend void mathing(Algebra& one, Math& second);
+};
+
+void mathing(Algebra& one, Math& second)
+{
+    int sum1 = one.Code1 + second.Code1;
+    int sum2 = one.Code2 + second.Code2;
+    cout << "Сумма полей: " << sum1 << ", " << sum2 << endl;
+}
 
 int main()
 {
     setlocale(LC_ALL, "Ru");
-    vector<Fridge> holodilnics;
-    int choice;
-
-    do
-    {
-        cout << "\nМеню:\n";
-        cout << "1. Добавить пустую информацию\n";
-        cout << "2. Добавить информацию с данными\n";
-        cout << "3. Вывести информацию обо всех холодильниках\n";
-        cout << "4. Завершить работу\n";
-        cout << "Выберите пункт меню: ";
-        cin >> choice;
-
-        switch (choice)
-        {
-        case 1:
-        {
-            holodilnics.emplace_back();
-            cout << "Пустой холодильник добавлен.\n";
-            break;
-        }
-        case 2:
-        {
-            int ves;
-            int power;
-            string brend;
-            string compania;
-
-            cout << "Введите вес холодильника: ";
-            cin >> ves;
-            cout << "Введите энергию холодильника: ";
-            cin >> power;
-            cout << "Введите бренд: ";
-            cin >> brend;
-            cout << "Введите название компании: ";
-            cin >> compania;
-
-            holodilnics.emplace_back(ves, power, brend, compania);
-            cout << "Холодильник добавлен.\n";
-            break;
-        }
-        case 3:
-        {
-            cout << "Информация об холодильниках:\n";
-            for (const auto& fridge : holodilnics)
-            {
-                cout << fridge.Info() << "\n";
-            }
-            break;
-        }
-        case 4:
-        {
-            cout << "Завершение работы программы.\n";
-            break;
-        }
-        default:
-        {
-            cout << "Некорректный выбор. Попробуйте снова.\n";
-            break;
-        }
-        }
-    } while (choice != 4);
+    Algebra sum1(7, 10);
+    Math sum2(5, 8);
+    mathing(sum1, sum2);
 }
