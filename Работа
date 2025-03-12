@@ -1,193 +1,66 @@
 #include <iostream>
-#include <string>
-#include <vector>
-
 using namespace std;
 
-class Animal
+class BaseEnemy 
 {
-protected:
-    int vid;
-    string name;
-
 public:
-    Animal() : vid(0), name("Без") {}
-    Animal(int vid, string name) : vid(vid), name(name)
+    virtual void DoDamage() = 0; 
+    virtual void Die() = 0;       
+    virtual void ChasePlayer() = 0; 
+
+    virtual ~BaseEnemy() {} 
+};
+
+class Sniper : public BaseEnemy 
+{
+public:
+    void DoDamage() override 
     {
-        if (vid < 0) throw invalid_argument("Виден");
+        cout << "Снайпер попадает в цель" << endl;
     }
 
-    virtual void display() const
+    void Die() override 
     {
-        cout << "Имя животного: " << name << "Вид: " << vid << endl;
+        cout << "Снайпер умирает" << endl;
     }
 
-    bool operator==(const Animal& drugoi)
+    void ChasePlayer() override 
     {
-        return (vid == drugoi.vid && name == drugoi.name);
-    }
-
-    Animal& operator++()
-    {
-        vid++;
-        return *this;
-    }
-
-    friend Animal operator+(const Animal& vid1, const Animal& vid2)
-    {
-        return Animal(vid1.vid + vid2.vid, vid1.name + vid2.name);
+        cout << "Снайпер преследует" << endl;
     }
 };
 
-class Mlecopita : public Animal
-{
+ class Soldier : public BaseEnemy 
+ {
 public:
-    Mlecopita() : Animal() {}
-    Mlecopita(int vid, string name) : Animal(vid, name) {}
-
-    virtual void display() const override
+    void DoDamage() override 
     {
-        cout << "Имя млекопитающие: " << name << "Вид: " << vid << endl;
+        cout << "Солдат наносит урон" << endl;
+    }
+
+    void Die() override 
+    {
+        cout << "Солдат умирает" << endl;
+    }
+
+    void ChasePlayer() override {
+        cout << "Солдат преследует" << endl;
     }
 };
 
-class Kopita : public Mlecopita {
-public:
-    Kopita() : Mlecopita() {}
-    Kopita(int vid, string name) : Mlecopita(vid, name) {}
-
-    virtual void display() const override
-    {
-        cout << "Имя парнокопытного: " << name << "Вид: " << vid << endl;
-    }
-};
-
-class Btitca : public Animal
+int main() 
 {
-public:
-    Btitca() : Animal() {}
-    Btitca(int vide, string name) : Animal(vid, name) {}
+Sniper sniper("Снайпер");
+Soldier soldier("Солдат");
 
-    virtual void display() const override
-    {
-        cout << "Имя птицы: " << name << "Вид: " << vid << endl;
-    }
-};
+sniper.DoDamage();
+sniper.Die();
+sniper.ChasePlayer();
 
-void dobavAnimal(vector<Animal*>& animals)
-{
-    int choice, vid;
-    string name;
+cout << endl;
 
-    cout << "Выберите тип животного (1 - Млекопитающее, 2 - Парнокопытное, 3 - Птица): ";
-    cin >> choice;
-    cout << "Введите вид: ";
-    cin >> vid;
-    cout << "Введите имя: ";
-    cin >> name;
-
-    try
-    {
-        Animal* animal = nullptr;
-        switch (choice)
-        {
-        case 1: animal = new Mlecopita(vid, name); break;
-        case 2: animal = new Kopita(vid, name); break;
-        case 3: animal = new Btitca(vid, name); break;
-        default: cout << "Неверное животное" << endl; return;
-        }
-        animals.push_back(animal);
-        cout << "Животное добавлено" << endl;
-    }
-    catch (const invalid_argument& once)
-    {
-        cout << once.what() << endl;
-    }
-}
-
-void removeAnimal(vector<Animal*>& animals)
-{
-    int element;
-    cout << "Введите элемент для удаления: ";
-    cin >> element;
-
-    if (element >= 0 && element < animals.size())
-    {
-        delete animals[element];
-        animals.erase(animals.begin() + element);
-        cout << "Животное удалено." << endl;
-    }
-    else
-    {
-        cout << "Неверный элемент." << endl;
-    }
-}
-
-void displayAnimals(const vector<Animal*>& animals)
-{
-    for (size_t i = 0; i < animals.size(); i++)
-    {
-        cout << "Элемент " << i << ": ";
-        animals[i]->display();
-    }
-}
-
-void compareAnimals(const vector<Animal*>& animals)
-{
-    int element1, element2;
-    cout << "Введите первый элемент: ";
-    cin >> element1;
-    cout << "Введите второй элемент: ";
-    cin >> element2;
-
-    if (element1 >= 0 && element1 < animals.size() && element2 >= 0 && element2 < animals.size())
-    {
-        if (*animals[element1] == *animals[element2])
-        {
-            cout << "Животные равны." << endl;
-        }
-        else
-        {
-            cout << "Животные не равны." << endl;
-        }
-    }
-    else
-    {
-        cout << "Неверные элементы." << endl;
-    }
-}
-
-int main()
-{
-    setlocale(LC_ALL, "Ru");
-    vector<Animal*> animals;
-    int choice;
-
-    do
-    {
-        cout << "Меню:\n";
-        cout << "1. Добавить новый элемент\n";
-        cout << "2. Удалить элемент\n";
-        cout << "3. Вывести все элементы\n";
-        cout << "4. Сравнить два элемента\n";
-        cout << "5. Завершить работу\n";
-        cout << "Выберите действие: ";
-        cin >> choice;
-
-        switch (choice)
-        {
-        case 1: dobavAnimal(animals); break;
-        case 2: removeAnimal(animals); break;
-        case 3: displayAnimals(animals); break;
-        case 4: compareAnimals(animals); break;
-        case 5: cout << "Завершение работы" << endl; break;
-        default: cout << "Неверно" << endl; break;
-        }
-    } while (choice != 5);
-
-    for (Animal* animal : animals)
-    {
-        delete animal;
-    }
+soldier.DoDamage();
+soldier.Die();
+soldier.ChasePlayer();
 
 }
