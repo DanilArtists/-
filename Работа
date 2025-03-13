@@ -1,66 +1,68 @@
 #include <iostream>
+#include <string>
+
 using namespace std;
 
-class BaseEnemy 
+class Vehicle 
 {
 public:
-    virtual void DoDamage() = 0; 
-    virtual void Die() = 0;       
-    virtual void ChasePlayer() = 0; 
-
-    virtual ~BaseEnemy() {} 
+    virtual void info() const = 0; 
+    virtual ~Vehicle() {}
 };
 
-class Sniper : public BaseEnemy 
+class Car : public Vehicle 
 {
 public:
-    void DoDamage() override 
-    {
-        cout << "Снайпер попадает в цель" << endl;
+    Car() 
+    { 
+    cout << "Машина создана" << endl; 
     }
-
-    void Die() override 
-    {
-        cout << "Снайпер умирает" << endl;
+    void info() const 
+    { 
+    cout << "Машина вызвана" << endl; 
     }
-
-    void ChasePlayer() override 
-    {
-        cout << "Снайпер преследует" << endl;
-    }
+    ~Car() {}
 };
 
- class Soldier : public BaseEnemy 
- {
+class Bike : public Vehicle 
+{
 public:
-    void DoDamage() override 
-    {
-        cout << "Солдат наносит урон" << endl;
-    }
-
-    void Die() override 
-    {
-        cout << "Солдат умирает" << endl;
-    }
-
-    void ChasePlayer() override {
-        cout << "Солдат преследует" << endl;
-    }
+    Bike() 
+   { 
+       cout << "Байк создан" << endl; 
+   }
+    void info() const  
+   {
+       cout << "Байк вызван" << endl; 
+   }
+    ~Bike() {}
 };
 
 int main() 
 {
-Sniper sniper("Снайпер");
-Soldier soldier("Солдат");
+    setlocale(LC_ALL, "Ru");
+    const int size = 10; 
+    Vehicle* vehicles[size]; 
 
-sniper.DoDamage();
-sniper.Die();
-sniper.ChasePlayer();
+    for (int i = 0; i < size; i++) 
+    {
+        if (i * 2 == 0) 
+        {
+            vehicles[i] = new Car(); 
+        } 
+        else 
+        {
+            vehicles[i] = new Bike(); 
+        }
+    }
 
-cout << endl;
+    for (int i = 0; i < size; i++) 
+    {
+        vehicles[i]->info();
+    }
 
-soldier.DoDamage();
-soldier.Die();
-soldier.ChasePlayer();
-
+    for (int i = 0; i < size; i++) 
+    {
+        delete vehicles[i];
+    }
 }
