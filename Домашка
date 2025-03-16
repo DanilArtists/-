@@ -1,44 +1,35 @@
 #include <iostream>
+#include <vector>
+
 using namespace std;
 
-class Algebra;
-class Math;
-
-class Math
+int main() 
 {
-private:
-    int Code1;
-    int Code2;
+  int colUkaz;
 
-public:
-    Math(int one, int second) : Code1(one), Code2(second) {}
+  cout << "Введите количество указателей: ";
+  cin >> colUkaz;
 
-    friend void mathing(Algebra& one, Math& second);
-};
+  int subject = 35; 
 
-class Algebra
-{
-private:
-    int Code1;
-    int Code2;
+  vector<int*> Ukaz(colUkaz);
 
-public:
-    Algebra(int three, int four) : Code1(three), Code2(four) {}
+  for (int i = 0; i < colUkaz; i++) 
+  {
+    Ukaz[i] = &subject;
+  }
 
-    friend void mathing(Algebra& one, Math& second);
-};
+  cout << "Адреса указателей:" << endl;
+  for (int i = 0; i < colUkaz; i++) 
+  {
+    cout << "Указатель " << i + 1 << ": " << Ukaz[i] << endl;
+  }
 
-void mathing(Algebra& one, Math& second)
-{
-    int sum1 = one.Code1 + second.Code1;
-    int sum2 = one.Code2 + second.Code2;
-    cout << "Сумма полей: " << sum1 << ", " << sum2 << endl;
-}
+  cout << "Адрес объекта: " << &subject << endl;
 
-int main()
-{
-    setlocale(LC_ALL, "Ru");
-    Algebra sum1(7, 10);
-    Math sum2(5, 8);
-    mathing(sum1, sum2);
+  if (colUkaz > 0) 
+  {
+    *Ukaz[0] = 100; 
+    cout << "Значение объекта после изменения: " << subject << endl;
+  }
 }
