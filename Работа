@@ -1,68 +1,114 @@
 #include <iostream>
-#include <string>
-
 using namespace std;
 
-class Vehicle 
+class ElectricVehicle 
 {
+protected:
+    int batteryLevel;
+
 public:
-    virtual void info() const = 0; 
-    virtual ~Vehicle() {}
+    ElectricVehicle() : batteryLevel(0) {}
+
+    void charge(int sum) 
+    {
+        batteryLevel += sum;
+        cout << "Заряд батареи увеличена" << sum << "Текущий уровень заряда: " << batteryLevel << endl;
+    }
+
+    void showBattery() 
+    {
+        cout << "Текущий уровень заряда: " << batteryLevel << endl;
+    }
 };
 
-class Car : public Vehicle 
+class LandTransport 
 {
+protected:
+    int speed;
+
 public:
-    Car() 
-    { 
-    cout << "Машина создана" << endl; 
+    LandTransport() : speed(0) {}
+
+    void fast(int nim) 
+    {
+        speed += nim;
+        cout << "Увеличена скорость на " << nim << "Текущая скорость: " << speed << endl;
     }
-    void info() const 
-    { 
-    cout << "Машина вызвана" << endl; 
+
+    void stop(int nim) 
+    {
+        speed -= nim;
+        if (speed < 0) speed = 0;
+        cout << "Снижена скорость на " << nim << "Текущая скорость: " << speed << endl;
     }
-    ~Car() {}
 };
 
-class Bike : public Vehicle 
+class WaterTransport 
+{
+protected:
+    int gloob;
+
+public:
+    WaterTransport() : depth(0) {}
+
+    void diver(int nim) 
+    {
+        gloob += nim;
+        cout << "Увеличена глубина на " << nim << "Текущая глубина: " << gloob << endl;
+    }
+
+    void surface(int value) 
+    {
+        gloob -= nim;
+        if (gloob < 0) gloob = 0; 
+        cout << "Снижена глубина на " << nim << "Текущая глубина: " << gloob << endl;
+    }
+};
+
+class ElectricCar : public ElectricVehicle, public LandTransport 
 {
 public:
-    Bike() 
-   { 
-       cout << "Байк создан" << endl; 
-   }
-    void info() const  
-   {
-       cout << "Байк вызван" << endl; 
-   }
-    ~Bike() {}
+    void diver() 
+    {
+        cout << "Электромобиль движется." << endl;
+    }
+};
+
+class ElectricBoat : public ElectricVehicle, public WaterTransport 
+{
+public:
+    void plot() 
+    {
+        cout << "Электрическая лодка плывет." << endl;
+    }
+};
+
+class LotVehicle : public ElectricCar, public ElectricBoat 
+{
+public:
+    void soZenlaMode() {
+        cout << "Переключение режима в наземный транспорт." << endl;
+    }
+
+    void soWodaMode() 
+    {
+        cout << "Переключение режима в водный транспорт." << endl;
+    }
 };
 
 int main() 
 {
-    setlocale(LC_ALL, "Ru");
-    const int size = 10; 
-    Vehicle* vehicles[size]; 
+    LotVehicle amphibiousVehicle;
+    
+    LotVehicle.charge(100);
+    LotVehicle.showBattery();
 
-    for (int i = 0; i < size; i++) 
-    {
-        if (i * 2 == 0) 
-        {
-            vehicles[i] = new Car(); 
-        } 
-        else 
-        {
-            vehicles[i] = new Bike(); 
-        }
-    }
+    LotVehicle.fast(59);
+    LotVehicle.diver();
 
-    for (int i = 0; i < size; i++) 
-    {
-        vehicles[i]->info();
-    }
+    LotVehicle.diver(25);
+    LotVehicle.plot();
 
-    for (int i = 0; i < size; i++) 
-    {
-        delete vehicles[i];
-    }
+    LotVehicle.soZenlaMode();
+    LotVehicle.soWodaMode();
 }
