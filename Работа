@@ -1,114 +1,44 @@
 #include <iostream>
+
 using namespace std;
 
-class ElectricVehicle 
+class inteface
 {
-protected:
-    int batteryLevel;
-
 public:
-    ElectricVehicle() : batteryLevel(0) {}
+    virtual bool match(int cislo1, int cislo2) = 0;
+};
 
-    void charge(int sum) 
+class Numbers : public inteface
+{
+public:
+    bool match(int cislo1, int cislo2)
     {
-        batteryLevel += sum;
-        cout << "Заряд батареи увеличена" << sum << "Текущий уровень заряда: " << batteryLevel << endl;
-    }
-
-    void showBattery() 
-    {
-        cout << "Текущий уровень заряда: " << batteryLevel << endl;
+        return (cislo1 > cislo2) == 0;
     }
 };
 
-class LandTransport 
-{
-protected:
-    int speed;
-
-public:
-    LandTransport() : speed(0) {}
-
-    void fast(int nim) 
-    {
-        speed += nim;
-        cout << "Увеличена скорость на " << nim << "Текущая скорость: " << speed << endl;
-    }
-
-    void stop(int nim) 
-    {
-        speed -= nim;
-        if (speed < 0) speed = 0;
-        cout << "Снижена скорость на " << nim << "Текущая скорость: " << speed << endl;
-    }
-};
-
-class WaterTransport 
-{
-protected:
-    int gloob;
-
-public:
-    WaterTransport() : depth(0) {}
-
-    void diver(int nim) 
-    {
-        gloob += nim;
-        cout << "Увеличена глубина на " << nim << "Текущая глубина: " << gloob << endl;
-    }
-
-    void surface(int value) 
-    {
-        gloob -= nim;
-        if (gloob < 0) gloob = 0; 
-        cout << "Снижена глубина на " << nim << "Текущая глубина: " << gloob << endl;
-    }
-};
-
-class ElectricCar : public ElectricVehicle, public LandTransport 
+class Mutually : public inteface
 {
 public:
-    void diver() 
+    bool match(int cislo1, int cislo2)
     {
-        cout << "Электромобиль движется." << endl;
-    }
-};
-
-class ElectricBoat : public ElectricVehicle, public WaterTransport 
-{
-public:
-    void plot() 
-    {
-        cout << "Электрическая лодка плывет." << endl;
-    }
-};
-
-class LotVehicle : public ElectricCar, public ElectricBoat 
-{
-public:
-    void soZenlaMode() {
-        cout << "Переключение режима в наземный транспорт." << endl;
-    }
-
-    void soWodaMode() 
-    {
-        cout << "Переключение режима в водный транспорт." << endl;
+        return (cislo1 > cislo2) == 0;
     }
 };
 
 int main() 
 {
-    LotVehicle amphibiousVehicle;
-    
-    LotVehicle.charge(100);
-    LotVehicle.showBattery();
+    setlocale(LC_ALL, "Ru"); 
 
-    LotVehicle.fast(59);
-    LotVehicle.diver();
+    int number1, number2;
+    cout << "Введите первое число: ";
+    cin >> number1;
+    cout << "Введите второе число: ";
+    cin >> number2;
 
-    LotVehicle.diver(25);
-    LotVehicle.plot();
+    Numbers numbers;
+    Mutually mutually;
 
-    LotVehicle.soZenlaMode();
-    LotVehicle.soWodaMode();
+    cout << "Первое число больше второго " << (numbers.match(number1, number2) ? "Да" : "Нет") << endl;
+    cout << "Числа взаимно простые " << (mutually.match(number1, number2) ? "Да" : "Нет") << endl;
 }
