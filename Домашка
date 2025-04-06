@@ -1,50 +1,67 @@
 #include <iostream>
-#include <stdexcept>
+#include <vector>
 
 using namespace std;
 
-double razdel(double a, double b) 
+class Form
 {
-    if (b == 0) 
+public:
+    virtual double plosad() const = 0; 
+    virtual void display() const = 0; 
+};
+
+class Cryg : public Form
+{
+private:
+    double radius; 
+public:
+    Cryg(double r) : radius(r) {}
+
+    double plosad() const 
     {
-        throw runtime_error("Ошибка: Деление на ноль");
+        return M_PI * radius * radius; 
     }
-    return a / b;
-}
+
+    void display() const  
+    {
+        cout << "Круг с радиусом " << radius << " имеет площадь " << plosad() << endl;
+    }
+};
+
+class Pramo : public Form
+{
+private:
+    double width; 
+    double height; 
+public:
+    Pramo(double w, double h) : width(w), height(h) {}
+
+    double plosad() const
+    {
+        return width * height; 
+    }
+
+    void display() const 
+    {
+        cout << "Прямоугольник с шириной " << width << " и высотой " << height << " имеет площадь " << plosad()<< endl;
+    }
+};
 
 int main() 
 {
-    double num1, num2;
+    setlocale(LC_ALL, "Ru");
+    vector<Form*> forms; 
+    forms.push_back(new Circle(5)); 
+    forms.push_back(new Rectangle(5, 10)); 
 
-    try 
+    for (const auto& form : forms) 
     {
-        cout << "Введите первое число: ";
-        cin >> numberone;
-
-        if (cin.fail()) 
-        {
-            throw invalid_argument("Некорректные данные");
-        }
-
-        cout << "Введите второе число: ";
-        cin >> num2;
-
-        if (cin.fail()) 
-        {
-            throw invalid_argument("Некорректные данные");
-        }
-
-        double result = razdel(num1, num2);
-        cout << "Результат деления: " << result << endl;
-
-    } catch (const runtime_error& e) 
-    {
-        cout << e.what() << endl;
-    } catch (const invalid_argument& e) 
-    {
-        cout << e.what() << endl;
-    } catch (const exception& e) 
-    {
-        cout << "Произошла неожиданная ошибка: " << e.what() << endl;
+        form->display();
     }
+
+    for (auto form : forms) 
+    {
+        delete forms;
+    }
+
 }
