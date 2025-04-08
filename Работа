@@ -2,43 +2,60 @@
 
 using namespace std;
 
-class inteface
-{
-public:
-    virtual bool match(int cislo1, int cislo2) = 0;
-};
 
-class Numbers : public inteface
+int verBaseDamage(int obicniuDamage) 
 {
-public:
-    bool match(int cislo1, int cislo2)
-    {
-        return (cislo1 > cislo2) == 0;
-    }
-};
+    return obicniuDamage;
+}
 
-class Mutually : public inteface
+int verRandomDamage(int minDamage, int maxDamage) 
 {
-public:
-    bool match(int cislo1, int cislo2)
+    return rand() % (maxDamage - minDamage + 1) + minDamage;
+}
+
+int verCriticalDamage(int obicniuDamage, float criticalChance) 
+{
+    if ((static_cast<float>(rand()) / RAND_MAX) < criticalChance) 
     {
-        return (cislo1 > cislo2) == 0;
+        return obicniuDamage * 2; 
     }
-};
+    return obicniuDamage;
+}
 
 int main() 
 {
-    setlocale(LC_ALL, "Ru"); 
+    setlocale(LC_ALL, "Ru");
+    srand(static_cast<unsigned int>(time(0))); 
 
-    int number1, number2;
-    cout << "Введите первое число: ";
-    cin >> number1;
-    cout << "Введите второе число: ";
-    cin >> number2;
+    int damageType;
+    int obicniuDamage = 35; 
+    int minDamage = 10;  
+    int maxDamage = 70; 
+    float criticalChance = 0.75f; 
 
-    Numbers numbers;
-    Mutually mutually;
+    cout << "Выберите тип урона:\n";
+    cout << "1 - Базовый урон\n";
+    cout << "2 - Урон от мин до макс\n";
+    cout << "3 - Урон с шансом крита\n";
+    cin >> damageType;
 
-    cout << "Первое число больше второго " << (numbers.match(number1, number2) ? "Да" : "Нет") << endl;
-    cout << "Числа взаимно простые " << (mutually.match(number1, number2) ? "Да" : "Нет") << endl;
+    int damage = 1;
+    
+    switch (damageType) 
+    {
+        case BASE_DAMAGE:
+            damage = verBaseDamage(obicniuDamage);
+            break;
+        case RANDOM_DAMAGE:
+            damage = verRandomDamage(minDamage, maxDamage);
+            break;
+        case CRITICAL_DAMAGE:
+            damage = verCriticalDamage(obicniuDamage, criticalChance);
+            break;
+        default:
+            cout << "Неверный выбор типа урона.\n";
+            return 1; 
+    }
+
+    cout << "Нанесенный урон: " << damage << endl;
 }
