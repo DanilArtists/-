@@ -1,61 +1,110 @@
 #include <iostream>
-
+#include <vector>
 using namespace std;
 
-
-int verBaseDamage(int obicniuDamage) 
+class IDamageComponent
 {
-    return obicniuDamage;
-}
+public:
+ virtual float GetDamage() = 0;
+};
 
-int verRandomDamage(int minDamage, int maxDamage) 
+class DefaultDamageComponent : public IDamageComponent
 {
-    return rand() % (maxDamage - minDamage + 1) + minDamage;
-}
+private:
 
-int verCriticalDamage(int obicniuDamage, float criticalChance) 
+protected:
+ float damage;
+
+public:
+
+ DefaultDamageComponent(float damage)
+ {
+  this->damage = damage;
+ }
+
+ float GetDamage() override
+ {
+  return damage;
+ }
+};
+
+class PlayerDamageController
 {
-    if ((static_cast<float>(rand()) / RAND_MAX) < criticalChance) 
+private:
+ float baseDamage;
+ IDamageComponent* damageComponent;
+
+ PlayerDamageController()
+ {
+  damageComponent = new DefaultDamageComponent(baseDamage);
+ }
+};
+
+class DamageDecorator : public IDamageComponent
+{
+private:
+
+protected:
+ IDamageComponent* damageComponent;
+public:
+
+ DamageDecorator(IDamageComponent* damageComponent)
+ {
+  this->damageComponent = damageComponent;
+ }
+
+ float GetDamage() override
+ {
+  return damageComponent->GetDamage();
+ }
+};
+
+class AddFixedDamageDecorator : public DamageDecorator
+{
+private:
+
+protected:
+ float addDamage;
+public:
+ AddFixedDamageDecorator(IDamageComponent* component, float addDamage) : DamageDecorator(component)
+ {
+  this->addDamage = addDamage;
+ }
+
+ float GetDamage() override
+ {
+  return addDamage + damageComponent->GetDamage();
+ }
+};
+
+class AddPercentDamageDecorator : public DamageDecorator
+{
+private:
+    float percent;
+
+public:
+    AddPercentDamageDecorator(IDamageComponent* component, float percent) : DamageDecorator(component)
     {
-        return obicniuDamage * 2; 
+        this->percent = percent;
     }
-    return obicniuDamage;
-}
+
+    float GetDamage() override
+    {
+        return damageComponent->GetDamage() * (1 + percent / 150.0f);
+    }
+  ~AddPercentDamageDecorator() override {}
+};
 
 int main() 
 {
-    setlocale(LC_ALL, "Ru");
-    srand(static_cast<unsigned int>(time(0))); 
+    IDamageComponent* baseDamage = new DefaultDamageComponent(150.0f);  
 
-    int damageType;
-    int obicniuDamage = 35; 
-    int minDamage = 10;  
-    int maxDamage = 70; 
-    float criticalChance = 0.75f; 
+    IDamageComponent* percentDamage = new AddPercentDamageDecorator(baseDamage, 20.0f);
 
-    cout << "Выберите тип урона:\n";
-    cout << "1 - Базовый урон\n";
-    cout << "2 - Урон от мин до макс\n";
-    cout << "3 - Урон с шансом крита\n";
-    cin >> damageType;
+    IDamageComponent* finalDamage = new AddFixedDamageDecorator(percentDamage, 50.0f);
 
-    int damage = 1;
-    
-    switch (damageType) 
-    {
-        case BASE_DAMAGE:
-            damage = verBaseDamage(obicniuDamage);
-            break;
-        case RANDOM_DAMAGE:
-            damage = verRandomDamage(minDamage, maxDamage);
-            break;
-        case CRITICAL_DAMAGE:
-            damage = verCriticalDamage(obicniuDamage, criticalChance);
-            break;
-        default:
-            cout << "Неверный выбор типа урона.\n";
-            return 1; 
-    }
-
-    cout << "Нанесенный урон: " << damage << endl;
+    cout << "Базовой урон: " << baseDamage->GetDamage() << endl; 
+    cout << "Урон увеличен на 20%" << percentDamage->GetDamage() << endl;  
+    cout << "Критический урон (20% + 50)" << finalDamage->GetDamage() << endl; 
+    delete finalDamage; 
 }
