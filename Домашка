@@ -1,67 +1,112 @@
+1)
+
 #include <iostream>
-#include <vector>
+#include <memory>
+#include <string>
 
 using namespace std;
 
-class Form
+class Kuznec 
 {
 public:
-    virtual double plosad() const = 0; 
-    virtual void display() const = 0; 
+    virtual void cuznica() = 0; 
 };
 
-class Cryg : public Form
+class SwordKuznec  : public Kuznec 
 {
-private:
-    double radius; 
 public:
-    Cryg(double r) : radius(r) {}
-
-    double plosad() const 
+    void cuznica() override 
     {
-        return M_PI * radius * radius; 
-    }
-
-    void display() const  
-    {
-        cout << "Круг с радиусом " << radius << " имеет площадь " << plosad() << endl;
+        cout << "Кузнец кует меч" << endl;
     }
 };
 
-class Pramo : public Form
+class ShieldKuznec : public Kuznec 
 {
-private:
-    double width; 
-    double height; 
 public:
-    Pramo(double w, double h) : width(w), height(h) {}
-
-    double plosad() const
+    void cuznica() override 
     {
-        return width * height; 
+        cout << "Кузнец кует щит" << endl;
     }
+};
 
-    void display() const 
+class KuznecSlucay
+{
+public:
+    enum KuznecType 
     {
-        cout << "Прямоугольник с шириной " << width << " и высотой " << height << " имеет площадь " << plosad()<< endl;
+        SWORD,
+        SHIELD
+    };
+
+    static unique_ptr<Kuznec> createKuznec(KuznecType type) 
+    {
+        if (type == SWORD) 
+        {
+            return make_unique<SwordKuznec>();
+        } else if (type == SHIELD) 
+        {
+            return make_unique<ShieldBlacksmith>();
+        }
+        return nullptr;
     }
 };
 
 int main() 
 {
-    setlocale(LC_ALL, "Ru");
-    vector<Form*> forms; 
-    forms.push_back(new Circle(5)); 
-    forms.push_back(new Rectangle(5, 10)); 
+    auto swordKuznec = BlacksmithSlucay::createKuznec(KuznecSlucay::SWORD);
+    swordKuznec->cuznica();
 
-    for (const auto& form : forms) 
+    auto shieldKuznec = KuznecSlucay::createKuznec(KuznecSlucay::SHIELD);
+    shieldKuznec->cuznica();
+}
+
+2)
+#include <iostream>
+
+using namespace std;
+
+class Pravitelstvo 
+{
+private:
+    static Pravitelstvo* instance;
+
+    Pravitelstvo() 
     {
-        form->display();
+        cout << "Создано правительство" << endl;
     }
 
-    for (auto form : forms) 
+public:
+    Pravitelstvo(Pravitelstvo const&) = delete;
+    void operator=(Pravitelstvo const&) = delete;
+
+    static Pravitelstvo* getInstance() 
     {
-        delete forms;
+        if (instance == nullptr) 
+        {
+            if (instance == nullptr) 
+            {
+                instance = new Pravitelstvo();
+            }
+        }
+        return instance;
     }
 
+    void govern() 
+    {
+        cout << "Власть у правительство" << endl;
+    }
+};
+
+Pravitelstvo* Pravitelstvo::instance = nullptr;
+
+int main() 
+{
+    Pravitelstvo* prav1 = Pravitelstvo::getInstance();
+    prav1->pravit();
+
+    Pravitelstvo* prav2 = Pravitelstvo::getInstance();
+    prav2->pravit();
+
+    cout << "prav1 и prav2 одинаковы" << (prav1 == prav2) << endl;
 }
