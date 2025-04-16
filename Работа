@@ -1,110 +1,111 @@
 #include <iostream>
 #include <vector>
+
 using namespace std;
 
-class IDamageComponent
+class Observer 
 {
 public:
- virtual float GetDamage() = 0;
+    virtual void update() = 0;
+    virtual ~Observer() {}
 };
 
-class DefaultDamageComponent : public IDamageComponent
+class Teacher 
 {
 private:
-
-protected:
- float damage;
+    vector<Observer*> observers;
+    string message;
 
 public:
-
- DefaultDamageComponent(float damage)
- {
-  this->damage = damage;
- }
-
- float GetDamage() override
- {
-  return damage;
- }
-};
-
-class PlayerDamageController
-{
-private:
- float baseDamage;
- IDamageComponent* damageComponent;
-
- PlayerDamageController()
- {
-  damageComponent = new DefaultDamageComponent(baseDamage);
- }
-};
-
-class DamageDecorator : public IDamageComponent
-{
-private:
-
-protected:
- IDamageComponent* damageComponent;
-public:
-
- DamageDecorator(IDamageComponent* damageComponent)
- {
-  this->damageComponent = damageComponent;
- }
-
- float GetDamage() override
- {
-  return damageComponent->GetDamage();
- }
-};
-
-class AddFixedDamageDecorator : public DamageDecorator
-{
-private:
-
-protected:
- float addDamage;
-public:
- AddFixedDamageDecorator(IDamageComponent* component, float addDamage) : DamageDecorator(component)
- {
-  this->addDamage = addDamage;
- }
-
- float GetDamage() override
- {
-  return addDamage + damageComponent->GetDamage();
- }
-};
-
-class AddPercentDamageDecorator : public DamageDecorator
-{
-private:
-    float percent;
-
-public:
-    AddPercentDamageDecorator(IDamageComponent* component, float percent) : DamageDecorator(component)
+    void attach(Observer* observer) 
     {
-        this->percent = percent;
+        observers.push_back(observer);
     }
 
-    float GetDamage() override
+    void detach(Observer* observer) 
     {
-        return damageComponent->GetDamage() * (1 + percent / 150.0f);
+        observers.erase(remove(observers.begin(), observers.end(), observer), observers.end());
     }
-  ~AddPercentDamageDecorator() override {}
+
+    void notify() 
+    {
+        for (Observer* observer : observers) 
+        {
+            observer->update();
+        }
+    }
+
+    void wrapUp() 
+    {
+        message = "Можете собираться и идти домой";
+        cout << "Преподаватель: " << message << endl;
+        notify();
+    }
+};
+
+class Student : public Observer 
+{
+protected:
+    string name;
+
+public:
+    Student(string name) : name(name) {}
+    virtual ~Student() {}
+    virtual string getName() { return name; }
+};
+
+class StudentA : public Student 
+{
+public:
+    StudentA(string name) : Student(name) {}
+
+    void update() override 
+    {
+        cout << "Студент " << getName() << " Начинает собирать вещи." << endl;
+    }
+};
+
+class StudentB : public Student 
+{
+public:
+    StudentB(string name) : Student(name) {}
+
+    void update() override 
+    {
+        cout << "Студент " << getName() << " Выключает компьютер." << endl;
+    }
+};
+
+class StudentC : public Student 
+{
+public:
+    StudentC(string name) : Student(name) {}
+
+    void update() override 
+    {
+        cout << "Студент " << getName() << " прощаться с друзьями." << endl;
+    }
 };
 
 int main() 
 {
-    IDamageComponent* baseDamage = new DefaultDamageComponent(150.0f);  
+    setlocale(LC_ALL, "Ru");
 
-    IDamageComponent* percentDamage = new AddPercentDamageDecorator(baseDamage, 20.0f);
+    Teacher teacher;
 
-    IDamageComponent* finalDamage = new AddFixedDamageDecorator(percentDamage, 50.0f);
+    StudentA studentA("Сергей");
+    StudentB studentB("Антон");
+    StudentC studentC("Лиля");
 
-    cout << "Базовой урон: " << baseDamage->GetDamage() << endl; 
-    cout << "Урон увеличен на 20%" << percentDamage->GetDamage() << endl;  
-    cout << "Критический урон (20% + 50)" << finalDamage->GetDamage() << endl; 
-    delete finalDamage; 
+    teacher.attach(&studentA);
+    teacher.attach(&studentB);
+    teacher.attach(&studentC);
+
+    teacher.wrapUp();
+
+    cout << endl;
+
+    teacher.detach(&studentB);
+    cout << "Лиля ушла раньше" << endl;
+    teacher.wrapUp();
 }
