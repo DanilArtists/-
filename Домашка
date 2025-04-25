@@ -1,112 +1,35 @@
-1)
+using System;
 
-#include <iostream>
-#include <memory>
-#include <string>
-
-using namespace std;
-
-class Kuznec 
+class Program
 {
-public:
-    virtual void cuznica() = 0; 
-};
-
-class SwordKuznec  : public Kuznec 
-{
-public:
-    void cuznica() override 
+    static void Main(string[] args)
     {
-        cout << "Кузнец кует меч" << endl;
-    }
-};
+        Console.Write("Введите количество строк: ");
+        int rows = int.Parse(Console.ReadLine());
 
-class ShieldKuznec : public Kuznec 
-{
-public:
-    void cuznica() override 
-    {
-        cout << "Кузнец кует щит" << endl;
-    }
-};
+        Console.Write("Введите количество столбцов: ");
+        int cols = int.Parse(Console.ReadLine());
 
-class KuznecSlucay
-{
-public:
-    enum KuznecType 
-    {
-        SWORD,
-        SHIELD
-    };
+        string[,] array = new string[rows, cols];
 
-    static unique_ptr<Kuznec> createKuznec(KuznecType type) 
-    {
-        if (type == SWORD) 
+        Console.WriteLine("Заполните массив:");
+        for (int i = 0; i < rows; i++)
         {
-            return make_unique<SwordKuznec>();
-        } else if (type == SHIELD) 
-        {
-            return make_unique<ShieldBlacksmith>();
-        }
-        return nullptr;
-    }
-};
-
-int main() 
-{
-    auto swordKuznec = BlacksmithSlucay::createKuznec(KuznecSlucay::SWORD);
-    swordKuznec->cuznica();
-
-    auto shieldKuznec = KuznecSlucay::createKuznec(KuznecSlucay::SHIELD);
-    shieldKuznec->cuznica();
-}
-
-2)
-#include <iostream>
-
-using namespace std;
-
-class Pravitelstvo 
-{
-private:
-    static Pravitelstvo* instance;
-
-    Pravitelstvo() 
-    {
-        cout << "Создано правительство" << endl;
-    }
-
-public:
-    Pravitelstvo(Pravitelstvo const&) = delete;
-    void operator=(Pravitelstvo const&) = delete;
-
-    static Pravitelstvo* getInstance() 
-    {
-        if (instance == nullptr) 
-        {
-            if (instance == nullptr) 
+            for (int j = 0; j < cols; j++)
             {
-                instance = new Pravitelstvo();
+                Console.Write($"Введите элемент [{i}, {j}]: ");
+                array[i, j] = Console.ReadLine();
             }
         }
-        return instance;
+
+        Console.WriteLine("Массив в обратном порядке:");
+        for (int i = rows - 1; i >= 0; i--)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                Console.Write(array[i, j] + "\t");
+            }
+            Console.WriteLine();
+        }
     }
-
-    void govern() 
-    {
-        cout << "Власть у правительство" << endl;
-    }
-};
-
-Pravitelstvo* Pravitelstvo::instance = nullptr;
-
-int main() 
-{
-    Pravitelstvo* prav1 = Pravitelstvo::getInstance();
-    prav1->pravit();
-
-    Pravitelstvo* prav2 = Pravitelstvo::getInstance();
-    prav2->pravit();
-
-    cout << "prav1 и prav2 одинаковы" << (prav1 == prav2) << endl;
 }
